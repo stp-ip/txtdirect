@@ -68,11 +68,15 @@ func (d *Dockerv2) Redirect() error {
 		if err != nil {
 			return err
 		}
+		// Set Cache-Control header on permanent redirects
+		// Prevent permanent redirect being eternally cached in browsers
 		d.rw.Header().Add("Cache-Control", fmt.Sprintf("max-age=%d", status301CacheAge))
 		d.rw.Header().Add("Status-Code", strconv.Itoa(http.StatusMovedPermanently))
 		http.Redirect(d.rw, d.req, uri, http.StatusMovedPermanently)
 		return nil
 	}
+	// Set Cache-Control header on permanent redirects
+	// Prevent permanent redirect being eternally cached in browsers
 	d.rw.Header().Add("Cache-Control", fmt.Sprintf("max-age=%d", status301CacheAge))
 	d.rw.Header().Add("Status-Code", strconv.Itoa(http.StatusMovedPermanently))
 	http.Redirect(d.rw, d.req, d.rec.To, http.StatusMovedPermanently)

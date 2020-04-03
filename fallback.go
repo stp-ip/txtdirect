@@ -30,6 +30,8 @@ type Fallback struct {
 // and if it's not provided it will check txtdirect config for
 // default fallback address
 func fallback(w http.ResponseWriter, r *http.Request, fallbackType string, code int, c Config) {
+	// Set Cache-Control header on permanent redirects
+	// Prevent permanent redirect being eternally cached in browsers
 	if code == http.StatusMovedPermanently {
 		w.Header().Add("Cache-Control", fmt.Sprintf("max-age=%d", status301CacheAge))
 	}

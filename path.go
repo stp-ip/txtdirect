@@ -111,6 +111,8 @@ func (p *Path) RedirectRoot() error {
 		return nil
 	}
 	log.Printf("[txtdirect]: %s > %s", UpstreamZone(p.req)+p.req.URL.Path, p.rec.Root)
+	// Set Cache-Control header on permanent redirects
+	// Prevent permanent redirect being eternally cached in browsers
 	if p.rec.Code == http.StatusMovedPermanently {
 		p.rw.Header().Add("Cache-Control", fmt.Sprintf("max-age=%d", status301CacheAge))
 	}

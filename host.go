@@ -34,6 +34,9 @@ func (h *Host) Redirect() error {
 		return nil
 	}
 	log.Printf("[txtdirect]: %s > %s", h.req.Host+h.req.URL.Path, to)
+
+	// Set Cache-Control header on permanent redirects
+	// Prevent permanent redirect being eternally cached in browsers
 	if code == http.StatusMovedPermanently {
 		h.rw.Header().Add("Cache-Control", fmt.Sprintf("max-age=%d", status301CacheAge))
 	}
