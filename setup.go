@@ -165,7 +165,7 @@ func setup(c *caddy.Controller) error {
 		return err
 	}
 
-	// Setup and add promethues middleware to caddy
+	// Setup and add prometheus middleware to caddy
 	if config.Prometheus.Enable {
 		config.Prometheus.SetDefaults()
 		config.Prometheus.Setup(c)

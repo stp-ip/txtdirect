@@ -197,7 +197,7 @@ func ParseRecord(str string, w http.ResponseWriter, req *http.Request, c Config)
 		r.Code = http.StatusFound
 	}
 
-	// Only apply rules and default to records that doesn't point to a upstream record
+	// Only apply rules and default to records that doesn't point to an upstream record
 	if len(r.Use) == 0 {
 		if r.Type == "" {
 			r.Type = "host"
@@ -243,7 +243,7 @@ func ParseURI(uri string, w http.ResponseWriter, r *http.Request, c Config) stri
 }
 
 // UpstreamRecord will check all of the use= fields and sends a request to each
-// upstream zone address and choses the first one that returns the final TXT
+// upstream zone address and chooses the first one that returns the final TXT
 // record
 func (rec *record) UpstreamRecord(c Config, w http.ResponseWriter, r *http.Request) (record, string, error) {
 	var upstreamRec record
