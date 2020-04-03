@@ -216,47 +216,6 @@ func TestConfigE2e(t *testing.T) {
 	}
 }
 
-func Test_isIP(t *testing.T) {
-	tests := []struct {
-		host     string
-		expected bool
-	}{
-		{
-			"https://example.test",
-			false,
-		},
-		{
-			"http://example.test",
-			false,
-		},
-		{
-			"http://192.168.test.subdomain.test",
-			false,
-		},
-		{
-			"192.168.1.1",
-			true,
-		},
-		{
-			"https://122.221.122.221",
-			true,
-		},
-		{
-			"FE80:0000:0000:0000:0202:B3FF:FE1E:8329",
-			true,
-		},
-		{
-			"FE80::0202:B3FF:FE1E:8329",
-			true,
-		},
-	}
-	for _, test := range tests {
-		if result := isIP(test.host); result != test.expected {
-			t.Errorf("%s is an IP not a domain", test.host)
-		}
-	}
-}
-
 func Test_customResolver(t *testing.T) {
 	tests := []struct {
 		config Config

@@ -122,15 +122,6 @@ func query(zone string, ctx context.Context, c Config) ([]string, error) {
 	return txts, nil
 }
 
-func isIP(host string) bool {
-	if v6slice := strings.Split(host, ":"); len(v6slice) > 2 {
-		return true
-	}
-	hostSlice := strings.Split(host, ".")
-	_, err := strconv.Atoi(hostSlice[len(hostSlice)-1])
-	return err == nil
-}
-
 func blacklistRedirect(w http.ResponseWriter, r *http.Request, c Config) error {
 	if bl[r.URL.Path] {
 		redirect := strings.Join([]string{r.Host, r.URL.Path}, "")
@@ -173,8 +164,8 @@ func Redirect(w http.ResponseWriter, r *http.Request, c Config) error {
 		return err
 	}
 
-	if isIP(host) {
-		log.Println("[txtdirect]: Trying to access 127.0.0.1, fallback triggered.")
+	if err := net.ParseIP(host); err != nil {
+		log.Println("[txtdirect]: Trying to access IP address directly, fallback triggered.")
 		fallback(w, r, "global", http.StatusMovedPermanently, c)
 		return nil
 	}
