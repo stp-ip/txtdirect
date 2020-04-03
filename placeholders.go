@@ -72,8 +72,8 @@ func parsePlaceholders(input string, r *http.Request, pathSlice []string) (strin
 			}
 			input = strings.Replace(input, "{user}", user, -1)
 		}
-		/* For multi-level tlds such as "example.co.uk", "co" would be used as {label2},
-		"example" would be {label1} and "uk" would be {label3} */
+		// For multi-level tlds such as "example.co.uk", "co" would be used as {label2},
+		// "example" would be {label1} and "uk" would be {label3}
 		if strings.HasPrefix(placeholder[0], "{label") {
 			nStr := placeholder[0][6 : len(placeholder[0])-1] // get the integer N in "{labelN}"
 			n, err := strconv.Atoi(nStr)
