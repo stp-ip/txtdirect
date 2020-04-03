@@ -220,6 +220,7 @@ func (rd TXTDirect) ServeHTTP(w http.ResponseWriter, r *http.Request) (int, erro
 			RequestsCount.WithLabelValues(r.Host).Add(1)
 		}
 		// Set Cache-Control header on permanent redirects
+		// Prevent permanent redirect being eternally cached in browsers
 		if w.Header().Get("Status-Code") == "301" {
 			w.Header().Add("Cache-Control", fmt.Sprintf("max-age=%d", status301CacheAge))
 		}
